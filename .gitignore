@@ -1,0 +1,12 @@
+.env
+/build_and_package.bat
+/deploy-rhel8.md
+/diff.txt
+/docker-compose.yml
+/iot_dashboard.tar
+/RHEL_Deployment/
+/Dockerfile
+/.dockerignore
+/nginx.conf
+.git_backup_*/
+
