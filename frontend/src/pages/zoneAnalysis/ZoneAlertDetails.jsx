@@ -257,8 +257,8 @@ export default function ZoneAlertDetails() {
                         style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`, backgroundPosition: `right 10px center`, backgroundRepeat: `no-repeat`, backgroundSize: `1.2em 1.2em` }}
                     >
                         <option value="All">All</option>
-                        <option value="true">hasAlert true</option>
-                        <option value="false">HasAlert false</option>
+                        <option value="true">Has Alert: Yes</option>
+                        <option value="false">Has Alert: No</option>
                     </select>
                     <select
                         value={filterTime}

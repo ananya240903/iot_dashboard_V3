@@ -1,15 +1,8 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
+import { OFFICE_CHART_COLORS } from '../../utils/theme';
 
-const COLORS = [
-  '#6366f1', // indigo
-  '#ec4899', // pink
-  '#ef4444', // red
-  '#0ea5e9', // sky blue
-  '#10b981', // emerald
-  '#f59e0b', // amber
-  '#8b5cf6', // purple
-];
+const COLORS = OFFICE_CHART_COLORS;
 
 const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -57,7 +50,7 @@ export default function TrendChart({ data = [], xAxisKey = "date" }) {
                     const dateObj = new Date(formattedDate);
                     formattedDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
                 }
-            } catch (e) {
+            } catch {
                 // Keep original if parsing fails
             }
             return {
@@ -109,10 +102,10 @@ export default function TrendChart({ data = [], xAxisKey = "date" }) {
                             </linearGradient>
                         ))}
                     </defs>
-                    <CartesianGrid strokeDasharray="4 4" stroke="#f1f5f9" vertical={false} />
+                    <CartesianGrid strokeDasharray="4 4" stroke="#EAF0F9" vertical={false} />
                     <XAxis 
                         dataKey="_displayDate" 
-                        tick={{ fill: '#94a3b8', fontSize: 11, fontWeight: 700 }}
+                        tick={{ fill: '#5F6B7A', fontSize: 11, fontWeight: 700 }}
                         axisLine={false}
                         tickLine={false}
                         dy={15}
@@ -121,12 +114,12 @@ export default function TrendChart({ data = [], xAxisKey = "date" }) {
                     <YAxis 
                         tickFormatter={formatYAxis}
                         allowDataOverflow
-                        tick={{ fill: '#94a3b8', fontSize: 11, fontWeight: 700 }}
+                        tick={{ fill: '#5F6B7A', fontSize: 11, fontWeight: 700 }}
                         axisLine={false}
                         tickLine={false}
                         dx={-15}
                     />
-                    <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#e2e8f0', strokeWidth: 1, strokeDasharray: '4 4', fill: 'transparent' }} />
+                    <Tooltip content={<CustomTooltip />} cursor={{ stroke: '#B8CCE4', strokeWidth: 1, strokeDasharray: '4 4', fill: 'transparent' }} />
                     <Legend content={<CustomLegend />} verticalAlign="top" />
                     {rsTypes.map((type, index) => (
                         <Area 
@@ -138,7 +131,7 @@ export default function TrendChart({ data = [], xAxisKey = "date" }) {
                             strokeWidth={2.5}
                             fillOpacity={1} 
                             fill={`url(#color-${type})`}
-                            activeDot={{ r: 6, strokeWidth: 3, stroke: '#ffffff', fill: COLORS[index % COLORS.length], style: { filter: 'drop-shadow(0px 2px 4px rgba(0,0,0,0.2))' } }}
+                            activeDot={{ r: 6, strokeWidth: 3, stroke: '#ffffff', fill: COLORS[index % COLORS.length], style: { filter: 'drop-shadow(0px 2px 4px rgba(56,93,138,0.25))' } }}
                         />
                     ))}
                 </AreaChart>

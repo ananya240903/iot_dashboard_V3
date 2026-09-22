@@ -259,8 +259,8 @@ export default function ZoneDeviceDataView() {
                         className="bg-slate-50 border border-slate-200 text-sm rounded-lg px-3 py-1.5 outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer font-medium text-slate-700 shadow-sm"
                     >
                         <option value="all">All Statuses</option>
-                        <option value="true">hasAlert: True</option>
-                        <option value="false">hasAlert: False</option>
+                        <option value="true">Has Alert: Yes</option>
+                        <option value="false">Has Alert: No</option>
                     </select>
                 </div>
             </div>
@@ -288,7 +288,7 @@ export default function ZoneDeviceDataView() {
                         <thead className="sticky top-0 z-10">
                             <tr className="bg-slate-50 border-b border-slate-200">
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Timestamp</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">hasAlert</th>
+                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Has Alert</th>
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Severity</th>
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Alert Count</th>
                                 <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Data</th>
@@ -307,11 +307,11 @@ export default function ZoneDeviceDataView() {
                                     <td className="px-6 py-4 whitespace-nowrap">
                                         {row.has_alert ? (
                                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-200">
-                                                True
+                                                Yes
                                             </span>
                                         ) : (
                                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-800 border border-green-200">
-                                                False
+                                                No
                                             </span>
                                         )}
                                     </td>

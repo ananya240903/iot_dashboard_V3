@@ -150,8 +150,8 @@ export default function ZoneDataRecordView() {
             <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-slate-200/50 overflow-hidden flex flex-col min-h-0">
                 <div className={`h-1.5 w-full transition-all duration-300 ${
                     viewMode === 'formatted'
-                        ? 'bg-gradient-to-r from-indigo-500 to-violet-500'
-                        : 'bg-gradient-to-r from-slate-700 to-slate-900  '
+                        ? 'bg-linear-to-r from-indigo-500 to-violet-500'
+                        : 'bg-linear-to-r from-slate-700 to-slate-900  '
                 }`} />
 
                 {loading ? (

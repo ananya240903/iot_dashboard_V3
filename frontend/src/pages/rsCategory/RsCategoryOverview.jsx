@@ -176,7 +176,7 @@ export default function RsCategoryOverview() {
 
       {/* ── Alerts by Category Table ─────────────────────────────────────────── */}
       <div className="bg-white/70 backdrop-blur-md rounded-3xl shadow-sm hover:shadow-lg border border-slate-200/60 overflow-hidden transition-all duration-300 hover:-translate-y-1 delay-100">
-        <div className="p-6 border-b border-slate-100/50 flex justify-between items-center bg-gradient-to-r from-slate-50/50 to-white/50">
+        <div className="p-6 border-b border-slate-100/50 flex justify-between items-center bg-linear-to-r from-slate-50/50 to-white/50">
           <div>
             <h3 className="text-xl font-bold text-slate-800 flex items-center gap-3 tracking-tight">
               <RefreshCw size={22} className="text-amber-500 animate-[spin_4s_linear_infinite]" />

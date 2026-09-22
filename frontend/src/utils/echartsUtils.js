@@ -1,9 +1,6 @@
-export const COLORS = [
-  '#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6',
-  '#06b6d4', '#f97316', '#ec4899', '#84cc16', '#14b8a6',
-  '#3b82f6', '#eab308', '#a855f7', '#f43f5e', '#22c55e',
-  '#0ea5e9', '#d946ef', '#64748b', '#c026d3', '#059669'
-];
+import { OFFICE_CHART_COLORS, OFFICE_STATUS_COLORS } from './theme';
+
+export const COLORS = OFFICE_CHART_COLORS;
 
 export const tooltipFormatter = (params, activeSeriesName) => {
   if (!params || !params.length) return '';
@@ -126,10 +123,10 @@ export const getEChartsOption = (graph, chartData, isTrendFullScreen, isolatedSe
           value: item[key],
           hasAlert: hasAlert,
           itemStyle: {
-            color: hasAlert ? '#ef4444' : dataKeyColor,
+            color: hasAlert ? OFFICE_STATUS_COLORS.offline : dataKeyColor,
             borderColor: hasAlert ? '#ffffff' : dataKeyColor,
             borderWidth: hasAlert ? 2 : 0,
-            shadowColor: hasAlert ? 'rgba(239, 68, 68, 0.6)' : 'transparent',
+            shadowColor: hasAlert ? 'rgba(192, 80, 77, 0.55)' : 'transparent',
             shadowBlur: hasAlert ? 8 : 0
           }
         };
@@ -159,10 +156,10 @@ export const getEChartsOption = (graph, chartData, isTrendFullScreen, isolatedSe
         symbol: 'circle',
         symbolSize: 14,
         itemStyle: {
-          color: '#ef4444',
+          color: OFFICE_STATUS_COLORS.offline,
           borderColor: '#ffffff',
           borderWidth: 2,
-          shadowColor: 'rgba(239, 68, 68, 0.6)',
+          shadowColor: 'rgba(192, 80, 77, 0.55)',
           shadowBlur: 8
         },
         label: { show: false },
@@ -183,7 +180,7 @@ export const getEChartsOption = (graph, chartData, isTrendFullScreen, isolatedSe
   return {
     tooltip: {
       trigger: 'axis',
-      axisPointer: { type: 'line', lineStyle: { color: '#cbd5e1', width: 2, type: 'dashed' } },
+      axisPointer: { type: 'line', lineStyle: { color: '#B8CCE4', width: 2, type: 'dashed' } },
       formatter: (params) => tooltipFormatter(params, isolatedSeriesForGraph || (hoveredSeriesRef && hoveredSeriesRef.current ? hoveredSeriesRef.current[graph.title] : null)),
       backgroundColor: 'transparent',
       padding: 0,
@@ -202,7 +199,7 @@ export const getEChartsOption = (graph, chartData, isTrendFullScreen, isolatedSe
       icon: 'circle',
       type: 'plain',
       itemGap: 15,
-      textStyle: { color: '#64748b', fontSize: 12, fontWeight: 500 },
+      textStyle: { color: '#5F6B7A', fontSize: 12, fontWeight: 600 },
       selected: isolatedSeriesForGraph ? graph.keysToRender.reduce((acc, key) => {
         acc[key] = (key === isolatedSeriesForGraph);
         return acc;
@@ -222,9 +219,9 @@ export const getEChartsOption = (graph, chartData, isTrendFullScreen, isolatedSe
       type: 'category',
       boundaryGap: false,
       data: xAxisData,
-      axisLine: { lineStyle: { color: '#e2e8f0' } },
+      axisLine: { lineStyle: { color: '#D9E2F3' } },
       axisTick: { show: false },
-      axisLabel: { color: '#94a3b8', fontSize: 11, margin: 12 }
+      axisLabel: { color: '#5F6B7A', fontSize: 11, margin: 12 }
     },
     yAxis: {
       type: 'value',
@@ -232,8 +229,8 @@ export const getEChartsOption = (graph, chartData, isTrendFullScreen, isolatedSe
       boundaryGap: ['5%', '10%'],
       axisLine: { show: false },
       axisTick: { show: false },
-      splitLine: { lineStyle: { type: 'dashed', color: '#f1f5f9' } },
-      axisLabel: { color: '#94a3b8', fontSize: 11, margin: 12 }
+      splitLine: { lineStyle: { type: 'dashed', color: '#EAF0F9' } },
+      axisLabel: { color: '#5F6B7A', fontSize: 11, margin: 12 }
     },
     dataZoom: [
       {
@@ -243,16 +240,16 @@ export const getEChartsOption = (graph, chartData, isTrendFullScreen, isolatedSe
         bottom: 65,
         height: 24,
         borderColor: 'transparent',
-        backgroundColor: '#f8fafc',
-        fillerColor: 'rgba(99, 102, 241, 0.08)',
-        handleStyle: { color: '#6366f1', borderColor: '#ffffff', borderWidth: 2, shadowBlur: 4, shadowColor: 'rgba(0,0,0,0.1)' },
+        backgroundColor: '#F5F8FC',
+        fillerColor: 'rgba(79, 129, 189, 0.15)',
+        handleStyle: { color: OFFICE_STATUS_COLORS.primary, borderColor: '#ffffff', borderWidth: 2, shadowBlur: 4, shadowColor: 'rgba(56,93,138,0.22)' },
         dataBackground: {
-          lineStyle: { color: '#cbd5e1', width: 1 },
-          areaStyle: { color: '#e2e8f0', opacity: 0.4 }
+          lineStyle: { color: '#B8CCE4', width: 1 },
+          areaStyle: { color: '#DCE6F2', opacity: 0.5 }
         },
         selectedDataBackground: {
-          lineStyle: { color: '#6366f1', width: 1 },
-          areaStyle: { color: '#818cf8', opacity: 0.2 }
+          lineStyle: { color: OFFICE_STATUS_COLORS.primaryDark, width: 1 },
+          areaStyle: { color: '#95B3D7', opacity: 0.28 }
         }
       },
       {
@@ -268,36 +265,36 @@ export const getEChartsOption = (graph, chartData, isTrendFullScreen, isolatedSe
 
 export const eChartsTooltipStylesHTML = `
       @keyframes borderPing {
-          0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.5); }
-          70% { box-shadow: 0 0 0 8px rgba(99, 102, 241, 0); }
-          100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+          0% { box-shadow: 0 0 0 0 rgba(79, 129, 189, 0.45); }
+          70% { box-shadow: 0 0 0 8px rgba(79, 129, 189, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(79, 129, 189, 0); }
       }
       .axle-active-box {
-          border-color: #818cf8 !important;
-          background-color: rgba(99, 102, 241, 0.04) !important;
+          border-color: #95b3d7 !important;
+          background-color: rgba(79, 129, 189, 0.08) !important;
           animation: borderPing 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
       }
       .dark .axle-active-box {
-          border-color: #6366f1 !important;
-          background-color: rgba(99, 102, 241, 0.15) !important;
+          border-color: #4f81bd !important;
+          background-color: rgba(79, 129, 189, 0.16) !important;
       }
       .active-badge {
-          background-color: #4f46e5 !important;
+          background-color: #4f81bd !important;
           color: white !important;
-          border-color: #4338ca !important;
-          box-shadow: 0 0 12px rgba(79, 70, 229, 0.6) !important;
+          border-color: #385d8a !important;
+          box-shadow: 0 0 12px rgba(79, 129, 189, 0.45) !important;
           transform: scale(1.05);
       }
       .active-text {
-          color: #4f46e5 !important;
+          color: #385d8a !important;
           font-weight: 900 !important;
       }
       .dark .active-badge {
-          background-color: #6366f1 !important;
-          border-color: #4f46e5 !important;
-          box-shadow: 0 0 12px rgba(99, 102, 241, 0.6) !important;
+          background-color: #4f81bd !important;
+          border-color: #385d8a !important;
+          box-shadow: 0 0 12px rgba(79, 129, 189, 0.45) !important;
       }
       .dark .active-text {
-          color: #818cf8 !important;
+          color: #95b3d7 !important;
       }
 `;

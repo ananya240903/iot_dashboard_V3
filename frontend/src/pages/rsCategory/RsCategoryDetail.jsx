@@ -113,7 +113,7 @@ export default function RsCategoryDetail() {
           <ArrowLeft size={24} />
         </button>
         <div>
-          <h2 className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600 flex items-center gap-3">
+          <h2 className="text-3xl font-black text-transparent bg-clip-text bg-linear-to-r from-indigo-600 to-violet-600 flex items-center gap-3">
             <Train size={32} className="text-indigo-600" />
             Category: {category}
           </h2>
@@ -122,7 +122,7 @@ export default function RsCategoryDetail() {
 
       {/* ── Data Table ──────────────────────────────────────────────────────── */}
       <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl shadow-indigo-100/50 border border-slate-200/50 overflow-hidden flex flex-col flex-1 min-h-0">
-        <div className="p-6 border-b border-slate-100/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-gradient-to-r from-slate-50/50 to-white/50 shrink-0">
+        <div className="p-6 border-b border-slate-100/50 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-linear-to-r from-slate-50/50 to-white/50 shrink-0">
           <h3 className="text-xl font-bold text-slate-800 flex items-center gap-3">
             <RefreshCw size={22} className="text-amber-500 animate-[spin_4s_linear_infinite]" />
             Alerts Based on RS Number and position ({sortedData.length})

@@ -82,16 +82,16 @@ export default function VehicleAlertsSearch() {
         </div>
       ) : searchResults ? (
         <div className="relative group/search transition-all duration-500 animate-in fade-in zoom-in-95 slide-in-from-top-4">
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-3xl blur opacity-20 transition duration-500"></div>
+          <div className="absolute -inset-0.5 bg-linear-to-r from-indigo-500 to-violet-500 rounded-3xl blur opacity-20 transition duration-500"></div>
           <div className="relative bg-white/80 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-xl shadow-indigo-100/50 border border-white/50">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
-              <h3 className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-violet-600 flex items-center gap-3">
+              <h3 className="text-2xl font-black text-transparent bg-clip-text bg-linear-to-r from-indigo-600 to-violet-600 flex items-center gap-3">
                 <Search className="text-indigo-600" size={28} />
                 RS Number: {searchResults.rsNo}
               </h3>
               <div className="flex items-center gap-4 w-full sm:w-auto">
                 {searchResults.totalAlerts !== undefined && (
-                  <div className="bg-gradient-to-r from-indigo-100 to-violet-100 text-indigo-700 px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-4 shadow-inner">
+                  <div className="bg-linear-to-r from-indigo-100 to-violet-100 text-indigo-700 px-4 py-2 rounded-xl text-sm font-bold flex items-center gap-4 shadow-inner">
                     <span>Alerts: <span className="text-red-500 text-lg">{searchResults.totalAlerts}</span></span>
                     <span className="w-px h-4 bg-indigo-300"></span>
                     <span>Normal: <span className="text-emerald-500 text-lg">{searchResults.totalNormal}</span></span>
@@ -102,7 +102,7 @@ export default function VehicleAlertsSearch() {
 
             <div className="overflow-x-auto rounded-2xl border border-slate-200/50 shadow-sm bg-white/50 backdrop-blur-sm">
               <table className="w-full text-left border-collapse">
-                <thead className="bg-gradient-to-r from-slate-50 to-indigo-50/30 border-b border-slate-200">
+                <thead className="bg-linear-to-r from-slate-50 to-indigo-50/30 border-b border-slate-200">
                   <tr>
                     <th className="py-4 px-6 font-bold text-xs uppercase tracking-wider text-slate-500">S.No</th>
                     <th className="py-4 px-6 font-bold text-xs uppercase tracking-wider text-slate-500">RS Number</th>

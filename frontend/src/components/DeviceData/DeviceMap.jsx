@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Search } from 'lucide-react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -17,17 +17,17 @@ const zoneGeoJsonFile = 'railway_zone.json';
 const trackGeoJsonFile = 'railway_track_cris.json';
 
 const markerColors = [
-    '#3b82f6', '#ef4444', '#10b981', '#f59e0b',
-    '#8b5cf6', '#ec4899', '#06b6d4', '#f97316'
+    '#4F81BD', '#C0504D', '#9BBB59', '#F79646',
+    '#8064A2', '#4BACC6', '#1F497D', '#E36C09'
 ];
 const zoneColors = [
-    '#2563eb', '#059669', '#ea580c', '#7c3aed',
-    '#db2777', '#0891b2', '#65a30d', '#dc2626',
-    '#0f766e', '#9333ea', '#c2410c', '#0284c7'
+    '#4F81BD', '#9BBB59', '#F79646', '#8064A2',
+    '#4BACC6', '#C0504D', '#76923C', '#953735',
+    '#1F497D', '#604A7B', '#E36C09', '#31859B'
 ];
 
 const getMarkerColor = (deviceTypeName) => {
-    if (!deviceTypeName) return '#64748b';
+    if (!deviceTypeName) return '#7F7F7F';
     let hash = 0;
     for (let i = 0; i < deviceTypeName.length; i++) {
         hash = deviceTypeName.charCodeAt(i) + ((hash << 5) - hash);
@@ -41,7 +41,7 @@ const getAssetUrl = (fileName) => {
 };
 
 const getZoneColor = (zoneCode) => {
-    if (!zoneCode) return '#0f766e';
+    if (!zoneCode) return '#4BACC6';
     let hash = 0;
     const normalizedCode = String(zoneCode).trim().toUpperCase();
     for (let i = 0; i < normalizedCode.length; i++) {
@@ -51,7 +51,7 @@ const getZoneColor = (zoneCode) => {
 };
 
 const getTrackCasingStyle = (zoom) => ({
-    color: '#fff7ed',
+    color: '#FDF7EF',
     weight: zoom >= 16 ? 7.4 : zoom >= 13 ? 5.8 : zoom >= 10 ? 4.2 : 3,
     opacity: zoom >= 16 ? 0.9 : zoom >= 13 ? 0.82 : zoom >= 10 ? 0.72 : 0.6,
     lineCap: 'round',
@@ -59,7 +59,7 @@ const getTrackCasingStyle = (zoom) => ({
 });
 
 const getTrackStyle = (zoom) => ({
-    color: '#c2410c',
+    color: '#E36C09',
     weight: zoom >= 16 ? 3.2 : zoom >= 13 ? 2.5 : zoom >= 10 ? 1.9 : 1.4,
     opacity: zoom >= 16 ? 0.98 : zoom >= 13 ? 0.92 : zoom >= 10 ? 0.84 : 0.72,
     lineCap: 'round',
@@ -176,7 +176,7 @@ const getMarkerIcon = (color, isLive, zoom = defaultZoom) => {
     return iconCache[key];
 };
 
-export default function DeviceMap({ deviceLocations, selectedZone, selectedDeviceType, selectedStatus }) {
+export default function DeviceMap({ deviceLocations, selectedZone, selectedDeviceType, selectedStatus, isFullscreen = false }) {
     const mapRef = useRef(null);
     const mapInstanceRef = useRef(null);
     const markersGroupRef = useRef(null);
@@ -287,6 +287,20 @@ export default function DeviceMap({ deviceLocations, selectedZone, selectedDevic
             map.off('zoomend', updateMarkerIconsForZoom);
         };
     }, []);
+
+    useEffect(() => {
+        const map = mapInstanceRef.current;
+        if (!map) return undefined;
+
+        const resizeMap = () => {
+            map.invalidateSize({ pan: false, animate: false });
+        };
+
+        resizeMap();
+        const timeoutId = setTimeout(resizeMap, 220);
+
+        return () => clearTimeout(timeoutId);
+    }, [isFullscreen]);
 
     useEffect(() => {
         const map = mapInstanceRef.current;
@@ -458,7 +472,7 @@ export default function DeviceMap({ deviceLocations, selectedZone, selectedDevic
                 if (!map.hasLayer(layer)) {
                     layer.addTo(map);
                 }
-            } catch (error) {
+            } catch {
                 if (!isCancelled) {
                     setOverlayError('Unable to load zone boundaries.');
                     setShowZones(false);
@@ -515,7 +529,7 @@ export default function DeviceMap({ deviceLocations, selectedZone, selectedDevic
                 if (!map.hasLayer(trackLayer)) {
                     trackLayer.addTo(map);
                 }
-            } catch (error) {
+            } catch {
                 if (!isCancelled) {
                     setOverlayError('Unable to load railway tracks.');
                     setShowTracks(false);

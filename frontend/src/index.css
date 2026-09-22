@@ -3,19 +3,52 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-sans: "Aptos", "Calibri", "Segoe UI", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --color-office-blue: #4f81bd;
+  --color-office-blue-dark: #385d8a;
+  --color-office-blue-soft: #dce6f2;
+  --color-office-purple: #8064a2;
+  --color-office-purple-soft: #e6e0ec;
+  --color-office-green: #9bbb59;
+  --color-office-green-soft: #eaf1dd;
+  --color-office-red: #c0504d;
+  --color-office-red-soft: #f2dcdb;
+  --color-office-orange: #f79646;
+  --color-office-orange-soft: #fdeada;
+  --color-office-teal: #4bacc6;
+  --color-office-teal-soft: #daeef3;
+  --color-surface-page: #f4f7fb;
+  --color-surface-card: rgba(255, 255, 255, 0.88);
+  --color-surface-card-strong: rgba(255, 255, 255, 0.94);
+  --color-border-soft: rgba(121, 151, 188, 0.22);
+  --color-text-strong: #243447;
+  --color-text-muted: #5f6b7a;
 }
 
 @layer base {
+  :root {
+    color-scheme: light;
+  }
+
   html {
-    font-size: 70%;
-    /* Scales down all rem units (text, padding, margins) by 25% */
+    font-size: 80%;
+    /* Keeps the UI slightly compact while improving readability across the app */
   }
 
   body {
-    @apply font-sans text-slate-800 bg-slate-50;
+    @apply font-sans;
+    color: var(--color-text-strong);
+    background:
+      radial-gradient(circle at top left, rgba(79, 129, 189, 0.14), transparent 28%),
+      radial-gradient(circle at top right, rgba(247, 150, 70, 0.12), transparent 24%),
+      linear-gradient(180deg, #f9fbfe 0%, var(--color-surface-page) 100%);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: rgba(79, 129, 189, 0.18);
+    color: var(--color-office-blue-dark);
   }
 }
 
@@ -46,12 +79,12 @@
   0%,
   100% {
     opacity: 1;
-    filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.4));
+    filter: drop-shadow(0 0 8px rgba(79, 129, 189, 0.35));
   }
 
   50% {
     opacity: 0.7;
-    filter: drop-shadow(0 0 2px rgba(99, 102, 241, 0.1));
+    filter: drop-shadow(0 0 2px rgba(79, 129, 189, 0.12));
   }
 }
 
@@ -66,18 +99,122 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-slate-200/60  rounded-full transition-colors;
+  background: linear-gradient(180deg, rgba(79, 129, 189, 0.55), rgba(128, 100, 162, 0.45));
+  border-radius: 9999px;
+  transition: background-color 150ms ease, opacity 150ms ease;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-slate-300 
+  background: linear-gradient(180deg, rgba(79, 129, 189, 0.7), rgba(128, 100, 162, 0.58));
 }
 
-/* Smooth modal transitions */
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-slate-300/50  hover:bg-slate-400/50  rounded-full;
+  background: linear-gradient(180deg, rgba(79, 129, 189, 0.5), rgba(75, 172, 198, 0.45));
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(79, 129, 189, 0.66), rgba(75, 172, 198, 0.62));
+}
+
+.text-indigo-400,
+.text-indigo-500,
+.text-indigo-600,
+.text-indigo-700,
+.text-indigo-800 {
+  color: var(--color-office-blue) !important;
+}
+
+.text-violet-500,
+.text-violet-600 {
+  color: var(--color-office-purple) !important;
+}
+
+.text-white {
+  color: #ffffff !important;
+}
+
+.bg-indigo-50,
+.bg-indigo-50\/30,
+.bg-indigo-50\/50,
+.bg-indigo-50\/80,
+.bg-indigo-100 {
+  background-color: var(--color-office-blue-soft) !important;
+}
+
+.bg-indigo-500,
+.bg-indigo-600 {
+  background-color: var(--color-office-blue) !important;
+}
+
+.bg-violet-100 {
+  background-color: var(--color-office-purple-soft) !important;
+}
+
+.border-indigo-100,
+.border-indigo-200,
+.border-indigo-300,
+.border-indigo-500,
+.border-indigo-600 {
+  border-color: rgba(79, 129, 189, 0.4) !important;
+}
+
+.from-indigo-500,
+.from-indigo-600 {
+  --tw-gradient-from: var(--color-office-blue) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(79, 129, 189, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from), var(--tw-gradient-to)) !important;
+}
+
+.to-indigo-500,
+.to-indigo-600 {
+  --tw-gradient-to: var(--color-office-blue) var(--tw-gradient-to-position) !important;
+}
+
+.from-violet-500,
+.from-violet-600 {
+  --tw-gradient-from: var(--color-office-purple) var(--tw-gradient-from-position) !important;
+  --tw-gradient-to: rgba(128, 100, 162, 0) var(--tw-gradient-to-position) !important;
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-position), var(--tw-gradient-from), var(--tw-gradient-to)) !important;
+}
+
+.to-violet-500,
+.to-violet-600 {
+  --tw-gradient-to: var(--color-office-purple) var(--tw-gradient-to-position) !important;
+}
+
+.hover\:bg-indigo-100:hover,
+.hover\:bg-indigo-50:hover {
+  background-color: rgba(79, 129, 189, 0.2) !important;
+}
+
+.hover\:text-indigo-600:hover,
+.hover\:text-indigo-700:hover,
+.hover\:text-indigo-800:hover {
+  color: var(--color-office-blue-dark) !important;
+}
+
+.hover\:text-white:hover {
+  color: #ffffff !important;
+}
+
+.group:hover .group-hover\:text-indigo-500,
+.group:hover .group-hover\:text-indigo-600,
+.group:hover .group-hover\:bg-indigo-400 {
+  color: var(--color-office-blue) !important;
+}
+
+.group:hover .group-hover\:bg-indigo-400 {
+  background-color: var(--color-office-blue) !important;
+}
+
+.focus\:ring-indigo-500:focus,
+.focus-within\:ring-indigo-500\/50:focus-within,
+.focus\:border-indigo-500:focus {
+  --tw-ring-color: rgba(79, 129, 189, 0.32) !important;
+  border-color: var(--color-office-blue) !important;
 }

@@ -195,8 +195,8 @@ export default function RsCategoryDataView() {
         {/* Colored tab indicator strip */}
         <div className={`h-1.5 w-full transition-all duration-300 ${
           activeTab === 'rs'
-            ? 'bg-gradient-to-r from-indigo-500 to-violet-500'
-            : 'bg-gradient-to-r from-emerald-400 to-teal-500'
+            ? 'bg-linear-to-r from-indigo-500 to-violet-500'
+            : 'bg-linear-to-r from-emerald-400 to-teal-500'
         }`} />
 
         {loading ? (

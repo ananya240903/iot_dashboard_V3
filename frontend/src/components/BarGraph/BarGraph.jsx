@@ -1,5 +1,53 @@
-import React from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
+import { OFFICE_CHART_COLORS, OFFICE_STATUS_COLORS } from '../../utils/theme';
+
+function CustomBarTooltip({ active, payload, label, tooltipExtras = [] }) {
+    if (active && payload && payload.length) {
+        return (
+            <>
+                <div className="bg-white/95 backdrop-blur-xl p-5 rounded-2xl border border-slate-200/50 shadow-2xl shadow-indigo-500/10 animate-in fade-in zoom-in-95 duration-200 ring-1 ring-black/5">
+                    <p className="text-xs font-black text-slate-500 mb-4 pb-3 border-b border-slate-100/80 uppercase tracking-widest">{label}</p>
+                    <div className="flex flex-col gap-3">
+                        {payload.filter(entry => {
+                            const originalKey = entry.dataKey.replace('_display_', '_original_');
+                            const val = entry.payload[originalKey] !== undefined ? entry.payload[originalKey] : entry.value;
+                            return val > 0;
+                        }).map((entry) => {
+                            const originalKey = entry.dataKey.replace('_display_', '_original_');
+                            const val = entry.payload[originalKey] !== undefined ? entry.payload[originalKey] : entry.value;
+                            return (
+                                <div key={entry.dataKey}>
+                                    <div className="flex items-center justify-between gap-10">
+                                        <div className="flex items-center gap-3">
+                                            <span className="w-3.5 h-3.5 rounded-md shadow-sm border border-black/10" style={{ backgroundColor: entry.color || OFFICE_STATUS_COLORS.primary }}></span>
+                                            <span className="text-[13px] font-bold text-slate-700 tracking-wide">{entry.name}</span>
+                                        </div>
+                                        <span className="text-sm font-black text-slate-900 bg-slate-100 px-2 py-0.5 rounded-md">{val.toLocaleString()}</span>
+                                    </div>
+
+                                    {tooltipExtras.map((extra) => {
+                                        const extraVal = entry.payload[extra.dataKey];
+                                        if (extraVal === undefined) return null;
+                                        return (
+                                            <div key={`${entry.dataKey}-${extra.dataKey}`} className="flex items-center justify-between gap-8 mt-2">
+                                                <div className="flex items-center gap-3">
+                                                    <span className="w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: extra.color || '#94a3b8' }}></span>
+                                                    <span className="text-xs font-bold text-slate-700 tracking-wide uppercase">{extra.name}</span>
+                                                </div>
+                                                <span className="text-sm font-black text-slate-900">{Number(extraVal).toLocaleString()}</span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+            </>
+        );
+    }
+    return null;
+}
 
 const formatYAxis = (tickItem) => {
     if (tickItem < 1 && tickItem !== 0.1) return '';
@@ -15,7 +63,8 @@ const formatYAxis = (tickItem) => {
 
 export default function BarGraph({ data = [], xAxisKey = "rsType", barDataKey = "totalAlertsInRsType", barName, bars, tooltipExtras = [], hideLegend = false, onBarClick, onBarHover, onBarHoverLeave }) {
     // If bars array is provided, use it, otherwise fallback to single barDataKey
-    const activeBars = bars || [{ dataKey: barDataKey, name: barName || barDataKey.replace(/_/g, ' ').toUpperCase(), color: '#6366f1' }];
+    const activeBars = bars || [{ dataKey: barDataKey, name: barName || barDataKey.replace(/_/g, ' ').toUpperCase(), color: OFFICE_STATUS_COLORS.primary }];
+    const usePaletteByData = !bars;
 
     // Process data to handle 0 values safely for log scale, and store original for tooltip
     const processedData = data.map(item => {
@@ -28,53 +77,6 @@ export default function BarGraph({ data = [], xAxisKey = "rsType", barDataKey = 
         });
         return processed;
     });
-
-    const CustomTooltip = ({ active, payload, label }) => {
-        if (active && payload && payload.length) {
-            return (
-                <div className="bg-white/95 backdrop-blur-xl p-5 rounded-2xl border border-slate-200/50 shadow-2xl shadow-indigo-500/10 animate-in fade-in zoom-in-95 duration-200 ring-1 ring-black/5">
-                    <p className="text-xs font-black text-slate-500 mb-4 pb-3 border-b border-slate-100/80 uppercase tracking-widest">{label}</p>
-                    <div className="flex flex-col gap-3">
-                        {payload.filter(entry => {
-                            const originalKey = entry.dataKey.replace('_display_', '_original_');
-                            const val = entry.payload[originalKey] !== undefined ? entry.payload[originalKey] : entry.value;
-                            return val > 0;
-                        }).map((entry, index) => {
-                            const originalKey = entry.dataKey.replace('_display_', '_original_');
-                            const val = entry.payload[originalKey] !== undefined ? entry.payload[originalKey] : entry.value;
-                            return (
-                                <React.Fragment key={index}>
-                                    <div className="flex items-center justify-between gap-10">
-                                        <div className="flex items-center gap-3">
-                                            <span className="w-3.5 h-3.5 rounded-md shadow-sm border border-black/10" style={{ backgroundColor: entry.color || '#6366f1' }}></span>
-                                            <span className="text-[13px] font-bold text-slate-700 tracking-wide">{entry.name}</span>
-                                        </div>
-                                        <span className="text-sm font-black text-slate-900 bg-slate-100 px-2 py-0.5 rounded-md">{val.toLocaleString()}</span>
-                                    </div>
-
-                                    {/* Render extras if they exist on this payload */}
-                                    {tooltipExtras.map((extra, i) => {
-                                        const extraVal = entry.payload[extra.dataKey];
-                                        if (extraVal === undefined) return null;
-                                        return (
-                                            <div key={`extra-${i}`} className="flex items-center justify-between gap-8 mt-2">
-                                                <div className="flex items-center gap-3">
-                                                    <span className="w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: extra.color || '#94a3b8' }}></span>
-                                                    <span className="text-xs font-bold text-slate-700 tracking-wide uppercase">{extra.name}</span>
-                                                </div>
-                                                <span className="text-sm font-black text-slate-900">{Number(extraVal).toLocaleString()}</span>
-                                            </div>
-                                        );
-                                    })}
-                                </React.Fragment>
-                            );
-                        })}
-                    </div>
-                </div>
-            );
-        }
-        return null;
-    };
 
     return (
         <div className="w-full h-full min-h-[300px]">
@@ -100,18 +102,18 @@ export default function BarGraph({ data = [], xAxisKey = "rsType", barDataKey = 
                 >
                     <defs>
                         <linearGradient id="barGradient" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="0%" stopColor="#6366f1" stopOpacity={0.9} />
-                            <stop offset="100%" stopColor="#4338ca" stopOpacity={0.7} />
+                            <stop offset="0%" stopColor={OFFICE_STATUS_COLORS.primary} stopOpacity={0.95} />
+                            <stop offset="100%" stopColor={OFFICE_STATUS_COLORS.primaryDark} stopOpacity={0.78} />
                         </linearGradient>
                     </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(241, 245, 249, 0.2)" vertical={false} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="rgba(184, 204, 228, 0.45)" vertical={false} />
                     <XAxis
                         dataKey={xAxisKey}
                         angle={-45}
                         textAnchor="end"
                         interval={0}
-                        tick={{ fill: '#64748b', fontSize: 11, fontWeight: 700 }}
-                        axisLine={{ stroke: '#e2e8f0', strokeWidth: 2 }}
+                        tick={{ fill: '#5F6B7A', fontSize: 11, fontWeight: 700 }}
+                        axisLine={{ stroke: '#D9E2F3', strokeWidth: 2 }}
                         tickLine={false}
                         dy={10}
                     />
@@ -120,14 +122,14 @@ export default function BarGraph({ data = [], xAxisKey = "rsType", barDataKey = 
                         domain={[0.1, 'auto']}
                         tickFormatter={formatYAxis}
                         allowDataOverflow
-                        tick={{ fill: '#64748b', fontSize: 11, fontWeight: 700 }}
+                        tick={{ fill: '#5F6B7A', fontSize: 11, fontWeight: 700 }}
                         axisLine={false}
                         tickLine={false}
                         dx={-10}
                     />
                     <Tooltip
-                        content={<CustomTooltip />}
-                        cursor={{ fill: 'rgba(99, 102, 241, 0.08)' }}
+                        content={<CustomBarTooltip tooltipExtras={tooltipExtras} />}
+                        cursor={{ fill: 'rgba(79, 129, 189, 0.1)' }}
                     />
                     {!hideLegend && (
                         <Legend
@@ -136,12 +138,12 @@ export default function BarGraph({ data = [], xAxisKey = "rsType", barDataKey = 
                             iconSize={12}
                         />
                     )}
-                    {activeBars.map((bar, index) => (
+                    {activeBars.map((bar) => (
                         <Bar
                             key={bar.dataKey}
                             dataKey={`_display_${bar.dataKey}`}
                             name={bar.name}
-                            fill={bar.color || "url(#barGradient)"}
+                            fill={usePaletteByData ? undefined : (bar.color || "url(#barGradient)")}
                             stackId={bar.stackId}
                             radius={bar.stackId ? [0, 0, 0, 0] : [6, 6, 0, 0]}
                             animationDuration={400}
@@ -162,8 +164,18 @@ export default function BarGraph({ data = [], xAxisKey = "rsType", barDataKey = 
                                 }
                             }}
                             cursor={onBarClick ? 'pointer' : 'default'}
-                            activeBar={{ fill: bar.activeColor || bar.color || '#4f46e5' }}
-                        />
+                            activeBar={{ fill: bar.activeColor || bar.color || OFFICE_STATUS_COLORS.primaryDark }}
+                        >
+                            {usePaletteByData && processedData.map((entry, entryIndex) => {
+                                const cellColor = OFFICE_CHART_COLORS[entryIndex % OFFICE_CHART_COLORS.length];
+                                return (
+                                    <Cell
+                                        key={`${bar.dataKey}-${entry[xAxisKey] ?? entryIndex}`}
+                                        fill={cellColor}
+                                    />
+                                );
+                            })}
+                        </Bar>
                     ))}
                 </BarChart>
             </ResponsiveContainer>

@@ -150,7 +150,11 @@ export default function RsCategoryPayload() {
             <div className="relative">
               <button
                 onClick={() => setShowAnalysisMenu(!showAnalysisMenu)}
-                className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 text-white rounded-xl font-bold text-sm shadow-lg shadow-indigo-500/30 transition-all hover:-translate-y-0.5 active:translate-y-0 w-full justify-center"
+                className="flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-indigo-500/30 transition-all hover:-translate-y-0.5 active:translate-y-0 w-full justify-center"
+                style={{
+                  background: 'linear-gradient(90deg, var(--color-office-purple) 0%, var(--color-office-blue) 100%)',
+                  color: '#ffffff'
+                }}
               >
                 <TrendingUp size={18} /> Deep Trend Analysis
               </button>
@@ -269,7 +273,7 @@ export default function RsCategoryPayload() {
       {/* ── Data Table ──────────────────────────────────────────── */}
       {(!showTrendAnalysis || !hasTrendData || activeTab === 'table') && (
         <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl shadow-indigo-100/50 border border-slate-200/50 overflow-hidden flex-1 flex flex-col min-h-0">
-        <div className="p-6 border-b border-slate-100/50 flex justify-between items-center bg-gradient-to-r from-slate-50/50 to-white/50">
+        <div className="p-6 border-b border-slate-100/50 flex justify-between items-center bg-linear-to-r from-slate-50/50 to-white/50">
           <h3 className="text-xl font-bold text-slate-800 flex items-center gap-3">
             <Play className="text-indigo-500 fill-indigo-500" size={18} />
             Alert Data
